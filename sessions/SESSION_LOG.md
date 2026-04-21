@@ -74,3 +74,21 @@ Format per entry:
 **Why:** Feedback demanded slower tempo (not gabber), deeper bass, and an actual buildup. Also established the correct `.cpm` convention — saved as feedback memory so future patterns don't repeat the mistake.
 
 **Outcome:** awaiting playback feedback. The starter tracks and components in `patterns/components/` likely have the same cpm mistake — audit pending if any sound too fast.
+
+---
+
+## 2026-04-22 — Jaakko kulta rendered + repo policy: MP3-only audio
+
+**Track / component:** `renders/Jaakkokulta.mp3`, `.gitignore`, `README.md`
+
+**Change:**
+- Mikko rendered `Jaakkokulta.wav` (48 kHz/16-bit stereo, 64 s, 12 MB) from the Strudel REPL.
+- Installed ffmpeg 8.1 via `winget install Gyan.FFmpeg --scope user`.
+- Converted to `Jaakkokulta.mp3` at 320 kbps CBR (2.5 MB) — archive quality for portfolio.
+- Moved both into `renders/`.
+- Added `.gitignore` with `*.wav` blanket rule — repo policy is MP3-only for renders.
+- Linked MP3 from the Selected Tracks table in `README.md`.
+
+**Why:** Mikko's explicit instruction — "jatkossa committaa ainoastaan mp3". Keeps repo lean and GitHub-friendly without needing git-LFS for a small hobby portfolio.
+
+**Outcome:** committed + pushed. Future renders follow the same flow: render WAV → `ffmpeg -b:a 320k` → MP3 → commit only MP3.
