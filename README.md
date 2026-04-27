@@ -60,6 +60,7 @@ Every track in the repo is a single expression like this — composable, no buil
 | `melodic-trance-138.js` | Melodic Trance | 138 | Supersaw pads, rolling bass, breakdown → drop |
 | `ambient-drift-70.js` | Ambient | 70 | Evolving pads, granular textures, space |
 | `jaakko-kulta-future-bass.js` | Trance × future bass | 132 | Finnish children's canon reimagined — [▶ MP3](renders/Jaakkokulta.mp3) |
+| `spacepotatis-galaxy-overworld.js` | Ambient space chillout | ~60 | Stellaris-paced pad + Tyrian-era synths — main menu / galaxy view of [Spacepotatis](https://github.com/MikkoNumminen/Spacepotatis) |
 
 Rendered MP3s of selected tracks live in [`renders/`](renders/) (WAV sources are git-ignored to keep the repo lean).
 

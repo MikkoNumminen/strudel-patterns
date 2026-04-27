@@ -92,3 +92,23 @@ Format per entry:
 **Why:** Mikko's explicit instruction — "jatkossa committaa ainoastaan mp3". Keeps repo lean and GitHub-friendly without needing git-LFS for a small hobby portfolio.
 
 **Outcome:** committed + pushed. Future renders follow the same flow: render WAV → `ffmpeg -b:a 320k` → MP3 → commit only MP3.
+
+---
+
+## 2026-04-28 — Spacepotatis galaxy overworld (new track)
+
+**Track / component:** `patterns/tracks/spacepotatis-galaxy-overworld.js`
+
+**Brief from Mikko:** music for the menu / galaxy overworld view of his Tyrian-2000-like vertical shooter "Spacepotatis" (https://github.com/MikkoNumminen/Spacepotatis). Reference: Tyrian 2000 + Stellaris + 90s 16/32-bit tracker palette. Calm, slow, ambient — player should be able to make decisions without feeling hurried, but the game should still hum quietly underneath. Screenshot showed dark space scene with planets orbiting a sun.
+
+**Change:** New track, `.cpm(15)` (~60 BPM feel, 1 cycle = 1 bar). D minor, modal — Dm9 → Fmaj7 → Cmaj9 → Am7, each held 4 bars (16-bar loop ≈ 64s). 6 layers, no drums:
+- Sub sine drone on chord root (4 bars/note).
+- Detuned saw chord pad with `perlin.range(700, 2400).slow(24)` filter breathing + `.jux(x => x.add(0.12))` for stereo width.
+- Triangle pad layer for warmth.
+- Triangle bell arp tracing chord tones, dotted-8th delay, `.sometimes(add 12)` octave bumps + `.degradeBy(0.35)` for sparseness.
+- Distant high sine shimmer, slow pan drift.
+- Filtered hat wash every 8 bars as "stellar wind" (saw filter sweep + heavy reverb).
+
+**Why:** Stellaris-style harmonic patience rendered through Tyrian-era synth palette. The "reminds of itself without rushing" requirement = sparse ambient presence, not silence and not a beat. No noise oscillator (`s("white")` not in STRUDEL_REFERENCE.md), so substituted a heavily LPF'd hat sample for the wind.
+
+**Outcome:** awaiting playback feedback. If it works, candidates to extract as components: the `perlin.range(...).slow(24)` LPF-breathing pad, the dotted-8th-delay triangle bell arp pattern, the "stellar wind" hat-wash technique.
