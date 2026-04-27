@@ -127,3 +127,18 @@ Format per entry:
 **Why:** Mikko wants the repo to reflect his actual collaborative output — the two tracks made together (Jaakko kulta, Spacepotatis) — not the example tracks the agent scaffolded on day one. Components in `patterns/components/` were extracted from those starters but stay, since they're presented as a reusable building-block library, not compositions.
 
 **Outcome:** committed and pushed.
+
+---
+
+## 2026-04-28 — Spacepotatis main menu rendered to MP3
+
+**Track / component:** `renders/SpacepotatisMainMenu.mp3`, `README.md`
+
+**Change:**
+- Mikko rendered `mainmenu3min.wav` (3:20, ~37 MB, 48 kHz stereo) of `spacepotatis-galaxy-overworld.js` from the Strudel REPL.
+- Converted via `ffmpeg -codec:a libmp3lame -b:a 320k` to `renders/SpacepotatisMainMenu.mp3` (7.6 MB).
+- Linked the MP3 from the Selected Tracks row in `README.md`.
+
+**Why:** Mikko wanted both selected tracks to have play-button MP3 examples (parity with Jaakko kulta).
+
+**Outcome:** committed + pushed. Source WAV stays in his Downloads folder, gitignored as per repo policy.
