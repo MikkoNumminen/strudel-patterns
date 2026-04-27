@@ -25,29 +25,31 @@ docs/             Strudel API reference, genre profiles, music theory cheat shee
 
 Input looks like this:
 
-> *"140 BPM dark techno. Driving four-on-the-floor kick, gritty acid 303 bassline, industrial hi-hats. Leave space. Build tension for 16 bars, then drop a distorted reese bass."*
+> *"Slow ambient for a space game menu. Stellaris vibe — long pad chords, sparse twinkling bells up high, no drums. Should feel like floating, not waiting."*
 
 Output is a Strudel pattern, refined through listen-and-respond iteration. Decisions and changes live in `sessions/SESSION_LOG.md` alongside the git history.
 
 ## A taste
 
-A few lines distilled from the main groove of `dark-techno-140.js` — Strudel is just expressions:
+A few lines distilled from `spacepotatis-galaxy-overworld.js` — Strudel is just expressions:
 
 ```js
 stack(
-  // driving four-on-the-floor, tuned low with body
-  s("bd*4").gain(1.0).shape(0.55).lpf(3500),
-  // rolling 16th closed hats, velocity ducking via sine
-  s("hh*16").gain(sine.range(0.25, 0.5).fast(4)).hpf(7000).cut(1),
-  // offbeat open hat — the techno heartbeat
-  s("~ ~ ~ oh").gain(0.55).hpf(3500).pan(0.65),
-  // acid 303 — phrygian ostinato, pedal on C with flat-2 lean
-  note("c2 c3 db2 c2 c2 eb3 c2 g2 c2 c3 db2 f2 c2 eb3 bb2 ab2")
+  // sub drone — chord roots, soft sine
+  note("<d2 f2 c2 a2>").slow(4).s("sine").attack(2).release(3).gain(0.7),
+  // detuned saw pad with breathing filter and stereo width
+  note("<[d3,f3,a3,c4,e4] [c3,f3,a3,c4,e4] [c3,e3,g3,b3,d4] [a2,c3,e3,g3,c4]>").slow(4)
     .s("sawtooth")
-    .attack(0.005).decay(0.18).sustain(0).release(0.08)
-    .lpf(sine.range(350, 2800).slow(8))
-    .lpq(12).shape(0.4).gain(0.78)
-).cpm(140)
+    .attack(2.5).release(4)
+    .lpf(perlin.range(700, 2400).slow(24)).lpq(2)
+    .room(0.7).gain(0.45)
+    .jux(x => x.add(0.12)),
+  // sparse triangle bells with dotted-8th delay — stars twinkling
+  note("<a4 c5 e5 d5 c5 a4 e5 c5>").slow(4)
+    .s("triangle").release(0.6)
+    .delay(0.55).delaytime(0.375).delayfeedback(0.6)
+    .room(0.55).gain(0.32).degradeBy(0.4)
+).cpm(15)
 ```
 
 Every track in the repo is a single expression like this — composable, no build step, no state.
@@ -56,9 +58,6 @@ Every track in the repo is a single expression like this — composable, no buil
 
 | Track | Genre | BPM | Description |
 |-------|-------|-----|-------------|
-| `dark-techno-140.js` | Dark Techno | 140 | Driving kick, acid 303, industrial textures |
-| `melodic-trance-138.js` | Melodic Trance | 138 | Supersaw pads, rolling bass, breakdown → drop |
-| `ambient-drift-70.js` | Ambient | 70 | Evolving pads, granular textures, space |
 | `jaakko-kulta-future-bass.js` | Trance × future bass | 132 | Finnish children's canon reimagined — [▶ MP3](renders/Jaakkokulta.mp3) |
 | `spacepotatis-galaxy-overworld.js` | Ambient space chillout | ~60 | Stellaris-paced pad + Tyrian-era synths — main menu / galaxy view of [Spacepotatis](https://github.com/MikkoNumminen/Spacepotatis) |
 

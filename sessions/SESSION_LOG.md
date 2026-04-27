@@ -112,3 +112,18 @@ Format per entry:
 **Why:** Stellaris-style harmonic patience rendered through Tyrian-era synth palette. The "reminds of itself without rushing" requirement = sparse ambient presence, not silence and not a beat. No noise oscillator (`s("white")` not in STRUDEL_REFERENCE.md), so substituted a heavily LPF'd hat sample for the wind.
 
 **Outcome:** awaiting playback feedback. If it works, candidates to extract as components: the `perlin.range(...).slow(24)` LPF-breathing pad, the dotted-8th-delay triangle bell arp pattern, the "stellar wind" hat-wash technique.
+
+---
+
+## 2026-04-28 — Repo cleanup: starter tracks removed
+
+**Change:** Removed the three Claude-scaffolded starter tracks per Mikko's instruction "only jaakkokulta and spacepotatis will remain in the repo. the 2 i made with you."
+
+- DELETED `patterns/tracks/dark-techno-140.js`
+- DELETED `patterns/tracks/melodic-trance-138.js`
+- DELETED `patterns/tracks/ambient-drift-70.js`
+- README.md: removed those rows from Selected Tracks table; replaced the "How I direct it" example prompt and the "A taste" code block (both used the dark-techno track) with material derived from `spacepotatis-galaxy-overworld.js`.
+
+**Why:** Mikko wants the repo to reflect his actual collaborative output — the two tracks made together (Jaakko kulta, Spacepotatis) — not the example tracks the agent scaffolded on day one. Components in `patterns/components/` were extracted from those starters but stay, since they're presented as a reusable building-block library, not compositions.
+
+**Outcome:** committed and pushed.
