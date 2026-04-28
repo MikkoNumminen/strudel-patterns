@@ -232,3 +232,102 @@ Translation: "duri" = duuri = major key. He liked the fast `.every(8, x => x.fas
 **Why:** Mikko's standing instruction — render any track that's worth keeping into a 320k MP3 in `renders/`, link from README, ship.
 
 **Outcome:** committed + pushed.
+
+---
+
+## 2026-04-28 — Spacepotatis mission 2 theme (mellow flight) — new track
+
+**Track / component:** `patterns/tracks/spacepotatis-mission2.js`
+
+**Brief from Mikko:** "Now i want you to create another different but similar masterpiece. mellow, slow, but with clear sound and melody" — and on the next breath confirmed "This will also be a mission music" → `spacepotatis-mission2.js`.
+
+**Change:** New track. Designed as the deliberate anti-mission1: same Tyrian × futuristic-synthpop palette, but slower, no drop, no buildup, just smooth layered fade-in and a sung-feeling melody hook.
+
+- Tempo: **88 BPM**, `.cpm(22)` (vs mission1's 132 BPM)
+- Key: **D major** with progression D – A – Bm – G (I-V-vi-IV) — most singable progression in pop, max melodic clarity, color contrast with mission1's A minor / C-major center
+- Structure (32-bar loop, ~87s):
+  - bars 1–4: intro — pad + sub + shimmer + sparse arp only
+  - bars 5–8: rhythm fades in — half-time kick + lazy beat-3 clap + soft 8th hats
+  - bars 9–32: full song — melody hook joins, chord cycle × 6
+- No buildup, no impact crash, no `.every(8, fast(2))` solo bursts — the contrast point with mission1
+- Layers: sub sine, vowel-formant pad (`vowel("<a o e>".slow(12))`), high sine shimmer, sparse triangle arp with dotted-8th delay, half-time `bd ~ ~ ~ bd ~ ~ ~` kick, beat-3 clap, soft 8th hats, and a saw-lead **melody hook** with rests between phrases (long note → 3-note gesture → breath) climbing to c#6 peak on the A bar.
+
+**Why "clear melody" choice:** rests are clarity. Each 4-bar phrase opens with a held note, has a quick 3-note answer, then a breath — the "singer phrasing" pattern. Forces the listener's ear onto the hook instead of letting it blend into a wall of motion.
+
+**Outcome:** rejected. Mikko clarified: "This was not what i was looking for. This is a fast phase mission. I need clearer main melody and some kine of old console kine of kick drum." Mellow ballad direction was wrong — mission 2 is a FAST phase, with a bit-crushed console-style kick and a chip-clear lead.
+
+---
+
+## 2026-04-28 — Spacepotatis mission 2 iteration 2 (fast-phase chiptune rebuild)
+
+**Track / component:** `patterns/tracks/spacepotatis-mission2.js` (full rewrite, not edit)
+
+**Feedback from Mikko:** mellow ballad rejected. Wants: fast phase, old-console kick drum, clearer main melody.
+
+**Change:** Complete redesign from 88 BPM ballad to 144 BPM chiptune-arcade.
+
+- TEMPO: 88 BPM → **144 BPM** (`.cpm(22)` → `.cpm(36)`). Fastest of all Spacepotatis tracks; clearly distinct from mission1 (132 BPM).
+- KICK: bd → `s("bd*4").crush(8).coarse(2).shape(0.45)` — bit-crush (8-bit reduction) + sample-rate reduction = real "old console" punch. The crush+coarse combo is the canonical "console kick" recipe in Strudel.
+- LEAD: sawtooth ballad → `s("square")` chiptune lead. Square wave is the chiptune signature; cuts through the mix for clarity.
+- MELODY HOOK: rewrote with the "Mega Man / Sonic" trick — *same rhythmic pattern across all 4 chord bars*, pitches transposed to each chord. Pattern: `[d5 d5 ~ f#5 a5 f#5 d5 ~]`. Repetition = memorability. Peak at d6 on the Bm bar.
+- BASS: sub sine → `s("triangle")` NES-style octave-bouncing 8ths (root-oct-root-5th × 2 per bar).
+- ARP: kept the chord-tone counter-melody concept but switched to square wave (8ths over each chord, low gain).
+- DROPPED: pad, vowel formant, shimmer, intro buildup, mask gates. Drops in instantly at full energy — no fade-in for a "fast phase" mission.
+- KEPT: same key (D major) and same chord progression (D-A-Bm-G) for sonic continuity within the mission2 development arc.
+
+**Why:** "Fast phase mission" reframed the brief — what I read as "mellow ballad" Mikko meant as "lighter than combat but fast-paced level". The chiptune palette (square leads, triangle bass, crushed kick) hits the "old console" feel directly; same-rhythm-across-chords technique is the chiptune trick for cutting through a busy arcade mix with a hook the player can hum after one playthrough.
+
+**Outcome:** rejected. "this was bad. the rythm is nonexistent ... simplify, use references like pokemon."
+
+---
+
+## 2026-04-28 — Spacepotatis mission 2 iteration 3 (Pokemon-style chiptune rebuild)
+
+**Track / component:** `patterns/tracks/spacepotatis-mission2.js` (full rewrite)
+
+**Feedback from Mikko:** "the rythm is nonexistent, this is a fast phase mission where this plays, simplify, use references like pokemon"
+
+**Diagnosis of v2 failure:** the rhythm read as "nonexistent" because (a) over-processed kick (`crush(8) + coarse(2)`) lost its punch, (b) the 16th hat + offbeat open hat + square arp piled up, washing out the kick/snare pulse, (c) the lead melody had `~` rests in syncopated positions that broke the rhythmic flow.
+
+**Change:** Stripped to the bones, modeled directly on Pokemon Gym Leader / Trainer Battle music.
+
+- TEMPO: 144 → **152 BPM** (`.cpm(36)` → `.cpm(38)`) — Pokemon battle pace.
+- LAYERS: 7 → **5**. Removed: open hat, square arp, the heavy crush+coarse stack on kick.
+- KICK: `s("bd*4").shape(0.45).crush(10)` — 4-on-the-floor with light crush only. crush(10) is mild (chip flavour without losing punch); shape(0.45) restores body.
+- SNARE: `s("~ sd ~ sd")` — proper snare on 2 & 4 (was clap before; sd is more chip-authentic).
+- HAT: `hh*8` straight 8ths (was `hh*16` — too busy).
+- BASS: kept as the **rhythm engine** — Pokemon-style relentless octave-bouncing 8ths, never stops driving. Pattern per bar: `root – oct – root – oct – 5th – oct(5th) – 5th – oct(5th)`. This is what carries the rhythm in chip music; the drums are accents on top.
+- LEAD: rewrote as **8th-notes throughout, no rests** — constant flow. Peak (d6) on beat 3 of each bar (aligns with second kick = maximum impact). Same hook climb-and-return shape transposed across all 4 chords.
+
+**Key insight that flipped the design:** in Pokemon-style chip music the BASS drives the rhythm, not the drums. The Game Boy only had one noise channel for percussion — drums are minimal punctuation. The pulse channel bass running constant 8ths is what makes the listener feel the pulse. v2 had a great triangle bass but it was buried under arp + extra hats + heavy kick processing.
+
+**Outcome:** rejected. "trash this. Lets start clear" — followed by `/clear`. All three mission 2 iterations (mellow ballad, generic chiptune, Pokemon-style chiptune) missed the mark. File deleted from disk; was never committed so the repo is unaffected. Slate is clean — next attempt starts with a fresh brief from Mikko.
+
+---
+
+## 2026-04-28 — Aggressive Major Synthpop — fresh template track
+
+**Track / component:** `patterns/tracks/aggressive-major-synthpop.js`
+
+**Brief from Mikko (full reset):** detailed multi-paragraph brief asking for a stylistic template that bridges (1) Tyrian 2000 / Alexander Brandon's 90s tracker game music — driving basslines, memorable melodic hooks, punchy lead synths, fast arpeggios, tight percussion, tracker-style layering, **melodies that carry the track**; and (2) modern synth-driven genres (synthwave / synthpop / contemporary electronic) — clean mixing, wider stereo, sidechain pumping, lush pads, modern polish. Target: aggressive major-key synthpop with the compositional DNA of a 90s Tyrian track. Bright, energetic, melodically dense (NOT minimalist), but with modern production. **Don't water it down into generic chill synthwave.** Required: clear sectioned structure (intro/main/break/variation), multiple layered voices (bass/lead/arp/pad/drums), code comments per layer.
+
+**Change:** New track. 32-bar piece with four distinct 8-bar sections gated by 32-cycle masks. **First track of the new direction** — to be iterated on, then used as a style template for game-specific tracks.
+
+- **Tempo:** 144 BPM (`.cpm(36)`). Major-key tracks at fast tempo land as aggressive — that's the trick the brief asks for.
+- **Key:** E major. Progression **E – C#m – A – B** (I-vi-IV-V) — the four-chord anthem progression.
+- **Sections** (8 bars each):
+  - INTRO: sub + sidechained pad + sparse one-note-per-bar lead phrase
+  - MAIN A: full kit + octave-bouncing saw bass (Tyrian "Mars" idiom) + 16th triangle arp with dotted-8th delay + detuned saw lead in oct 5 carrying the hook
+  - BREAK: kick/snare/bass/arp drop; hats continue (continuity); lead breathes for 8 bars
+  - MAIN B: full return + lead jumps to oct 6 with wider `.jux(0.18)` for the climax
+- **Modern polish:** `gain(sine.range(0.18,0.42).fast(4))` 4-ducks-per-cycle sidechain on pad; `.jux(x=>x.add(0.12))` stereo width on lead; perlin LPF breathing on pad; crashes on bars 9 / 17 / 25 mark section transitions.
+- **The hook:** each 4-bar phrase climbs through its chord's arpeggio, peaks on beat 3 (e6 / c#6 / a5 / b5), descends via the chord's leading tone (D# over E, B over C#m, G# over A, A# over B). Same melodic shape transposed across all four chords — the Tyrian repetition trick that makes a hook stick after one listen.
+
+**Why these choices:**
+- E major instead of D / A / B♭ — gives a fresh sonic palette (none of the existing repo tracks use it) and the sharp keys feel "tense bright"
+- I-vi-IV-V over more obvious progressions because the relative minor (C#m) on bar 2 adds harmonic depth without leaving the major-key brightness
+- Octave-bouncing saw bass is non-negotiable for Tyrian DNA; same with the 16th-arp-with-dotted-8th-delay
+- Lead intentionally dense (8 notes per bar, no rests within each phrase) to honor the "melodically dense, not minimalist" requirement — this is the explicit rebuke to the rejected mission 2 ballad direction
+- Octave-up climax in main B is the classic Tyrian "second chorus" move; modern .jux widening is the synthpop polish on top
+
+**Outcome:** Mikko approved on the first listen ("This is excelllent =DD push as mission2"). Renamed `aggressive-major-synthpop.js` → `spacepotatis-mission2.js`, updated header to mention the mission 2 role, added a row to README. Committed and pushed. The detailed brief style + plan-then-write flow nailed it where three previous mission2 iterations failed — the brief itself was what was missing before.
