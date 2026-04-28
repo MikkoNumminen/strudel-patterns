@@ -331,3 +331,59 @@ Translation: "duri" = duuri = major key. He liked the fast `.every(8, x => x.fas
 - Octave-up climax in main B is the classic Tyrian "second chorus" move; modern .jux widening is the synthpop polish on top
 
 **Outcome:** Mikko approved on the first listen ("This is excelllent =DD push as mission2"). Renamed `aggressive-major-synthpop.js` → `spacepotatis-mission2.js`, updated header to mention the mission 2 role, added a row to README. Committed and pushed. The detailed brief style + plan-then-write flow nailed it where three previous mission2 iterations failed — the brief itself was what was missing before.
+
+---
+
+## 2026-04-28 — Spacepotatis mission 2 iteration (reframe to space combat)
+
+**Track / component:** `patterns/tracks/spacepotatis-mission2.js` (full rewrite of approved version)
+
+**Feedback from Mikko:** "Thats a bit too much unicorns with rainbows etc. I want a space combat themed 90s vibe synth combat music"
+
+**Diagnosis:** the v1 (aggressive major synthpop) approval was real but on second listen the major-key brightness read as cheerful/anthemic — wrong mood for a mission combat track. Major-key + fast tempo = aggressive in theory, but the I-vi-IV-V progression, upper-register lead arpeggios climbing to e6/c#6 peaks, and bright triangle arp added up to "uplifting" rather than "combat".
+
+**Change:** Same skeleton (32 bars, four 8-bar sections, mask-gated, Tyrian DNA preserved), darker palette throughout.
+
+- KEY: E major → **E minor / Phrygian-flavored**. Progression: E – C#m – A – B  →  **Em – F – C – D** (i-bII-bVI-bVII). The F over E (Phrygian b2) is the half-step-above-tonic that defines 90s space-shooter combat music. D major in bar 4 borrows F# as a leading tone for dominant pull back to E.
+- LEAD: oct 5-6 detuned saw (bright) → **oct 4-5 distorted saw** (`shape(0.3)`, mid register, menacing). LPF range 3000-6500 → 2500-5000 (darker).
+- MAIN B CLIMAX: octave-up to oct 6-7 (sparkle) → **5th-up power-harmony stacked on the lead** (`add(7)`, same register). Power instead of rainbows.
+- ARP: triangle (sweet/bright) → **square wave** (bite, 90s chip aggression). LPF cap 7000 → 5000.
+- DRUMS: clean kick/snare → light `crush(12)` on both for 90s console grit.
+- ADDED: cowbell offbeat (`~ ~ ~ cb ~ ~ ~ cb`) for combat percussion texture.
+- ADDED: vowel formant on pad (`vowel("<a o>".slow(8))`) for industrial color, dropped pad LPF range from 2000-3500 → 1500-2800 (deeper).
+- INTRO LEAD: bright single-note ascent E-C#-A-B → Phrygian ascent E-F-G-A in oct 4 (broody).
+- KEPT: tempo 144 BPM, structure (intro/main A/break/main B), mask logic, hats-continue-through-break, Tyrian octave-bouncing bass idiom, fast 16th arp with dotted-8th delay, sub sine on roots, sidechain pad gain LFO, .jux stereo width on lead, crash on section transitions.
+
+**Why these specific changes hit the brief:**
+- Phrygian bII is the canonical "video game combat dread" sound. Tyrian's darker tracks, Doom's E1M1, Wipeout XL — they all use it.
+- 5th-up harmony instead of octave-up climax = "power chord lead" rather than "sparkly high lead". Maintains energy without the cheerful upper-register pull.
+- Square arp + distorted saw lead in mid register = 90s chip-combat tone palette.
+- Cowbell offbeat is the small-but-mighty percussion accent that says "this is combat", not "this is anthem".
+
+**Outcome:** awaiting playback feedback. v1 (the approved major-key version) is still on `main` at commit `84d749e`; this iteration has not been committed/pushed yet — listen first per protocol.
+
+---
+
+## 2026-04-29 — Spacepotatis story 1 — opening narration underscore (new track)
+
+**Track / component:** `patterns/tracks/spacepotatis-story1.js`
+
+**Brief from Mikko:** music for the first storytelling box of Spacepotatis. A grandmotherly voice reads "The Great Potato Awakening" — the absurd-but-dignified origin story (potato grew tired of being mashed → grew engines, sprouted lasers, launched into space, fights the bugs forever). Read in 30s. Need ambient sci-fi background.
+
+**Change:** New track. Designed strictly as voiceover underscore.
+
+- TEMPO: 60 BPM, `.cpm(15)`
+- KEY: A minor, progression Am – F – G – Am (i-VI-VII-i), each chord held 2 bars
+- LENGTH: 8 bars = 32 seconds (30s narration + 2s tail to resolve)
+- LAYERS (4): sub sine drone on chord roots (oct 1, well below voice), vowel-formant sawtooth pad with `lpf(saw.range(800,2200).slow(8))` slow opening filter for "awakening" arc, sparse high sine shimmer in oct 6 with long delay (above voice), 4-note triangle motif (`a4 → c5 → e5 → a4` — one note every 8s sustained across 32s).
+- NO DRUMS, NO RHYTHM — pure atmospheric bed.
+
+**VO mixing principles applied:**
+- Frequency separation: sub (oct 1, 50-100 Hz) + shimmer (oct 6+, 1300+ Hz) take prominence; mid-range (200-3000 Hz where the voice lives) is given minimum musical content.
+- Pad gain capped at 0.32 — sits explicitly BEHIND the voice.
+- Motif is 4 sustained notes total in 32s — not a melody, just punctuation. Doesn't compete for the listener's attention.
+- Chord arc mirrors narrative arc: Am ("humble") → F ("does what tuber would do") → G (tension/lift = "fights the bugs") → Am ("forever" returns home).
+
+**Why no drums:** any rhythmic pulse pulls the listener's ear off the storyteller. For grandmotherly storytelling underscore, drums are the wrong tool — needs to be a pad bed.
+
+**Outcome:** Mikko approved on the first listen ("this is great! push as storymusic1 for space potatis"). File renamed `spacepotatis-story1.js` → `spacepotatis-storymusic1.js` per his exact wording, header updated, README row added. Committed and pushed. Naming convention extended: `spacepotatis-storymusic<N>.js` for narration underscores (alongside `spacepotatis-mission<N>.js` for combat themes).

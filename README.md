@@ -62,6 +62,7 @@ Every track in the repo is a single expression like this — composable, no buil
 | `spacepotatis-galaxy-overworld.js` | Ambient space chillout | ~60 | Main menu / galaxy view of [Spacepotatis](https://github.com/MikkoNumminen/Spacepotatis) — Stellaris-paced pad + Tyrian-era synths — [▶ MP3](renders/SpacepotatisMainMenu.mp3) |
 | `spacepotatis-mission1.js` | Combat synthwave | 132 | Mission 1 theme of [Spacepotatis](https://github.com/MikkoNumminen/Spacepotatis) — Tyrian-style buildup → drop → loop, cyberpunk palette — [▶ MP3](renders/SpacepotatisMission1.mp3) |
 | `spacepotatis-mission2.js` | Aggressive major synthpop | 144 | Mission 2 theme of [Spacepotatis](https://github.com/MikkoNumminen/Spacepotatis) — E major anthem with intro/main/break/variation arc, octave-up climax |
+| `spacepotatis-storymusic1.js` | Ambient sci-fi storyteller | ~60 | "The Great Potato Awakening" intro narration underscore for [Spacepotatis](https://github.com/MikkoNumminen/Spacepotatis) — 32s VO bed |
 
 Rendered MP3s of selected tracks live in [`renders/`](renders/) (WAV sources are git-ignored to keep the repo lean).
 
