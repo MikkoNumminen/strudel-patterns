@@ -88,10 +88,6 @@ Worked-out drum patterns, basslines, synth layers, effect chains, and song skele
 
 **No runtime dependencies.** Patterns are pure Strudel expressions — self-contained, portable, no build step. No global state, no side effects, no hidden configuration.
 
-## Also from me
-
-Same engineering style applied to full-stack web: [HRManager](https://github.com/MikkoNumminen/HRManager) · [ReadLog](https://github.com/MikkoNumminen/ReadLog) · [AudiobookMaker](https://github.com/MikkoNumminen/AudiobookMaker).
-
 ## Credits
 
 - [TidalCycles](https://tidalcycles.org/) — the original pattern language by Alex McLean.
