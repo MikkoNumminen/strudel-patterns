@@ -217,3 +217,18 @@ Translation: "duri" = duuri = major key. He liked the fast `.every(8, x => x.fas
 **Why:** Re-keying the chord progression would have ripple effects across bass/pad/arp; instead, brightening the melody alone re-centers the listener's ear on C major within the existing Am-F-C-G chord set, since both share the same diatonic notes. Cheap iteration, biggest perceptual impact.
 
 **Outcome:** Mikko approved ("This is cool"). Renamed `spacepotatis-combat.js` → `spacepotatis-mission1.js` per his instruction "Push as a mission1 theme" — establishes a per-mission naming convention for future level themes (mission2, mission3, …). Added README row, committed and pushed.
+
+---
+
+## 2026-04-28 — Spacepotatis mission 1 rendered to MP3
+
+**Track / component:** `renders/SpacepotatisMission1.mp3`, `README.md`
+
+**Change:**
+- Mikko rendered `Mission1.wav` (1:40, ~18 MB, 48 kHz stereo) of `spacepotatis-mission1.js` from the Strudel REPL.
+- Converted via `ffmpeg -codec:a libmp3lame -b:a 320k` to `renders/SpacepotatisMission1.mp3` (3.8 MB).
+- Linked the MP3 from the Selected Tracks row in `README.md` so the mission1 row now has play-button parity with Jaakko kulta and the main-menu track.
+
+**Why:** Mikko's standing instruction — render any track that's worth keeping into a 320k MP3 in `renders/`, link from README, ship.
+
+**Outcome:** committed + pushed.
