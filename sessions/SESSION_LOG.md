@@ -510,3 +510,56 @@ Translation: "duri" = duuri = major key. He liked the fast `.every(8, x => x.fas
 
 **Outcome:** committed. Sits next to mission 1 in the soundtrack now without tonal whiplash.
 
+---
+
+## 2026-05-01 — Spacepotatis galaxy overworld 2 (Tubernovae Cluster — advanced-tech civilization)
+
+**Track / component:** `patterns/tracks/spacepotatis-galaxy-overworld2.js`
+
+**Brief from Mikko:** new background ambience for the next galaxy. Wants the same vibe as `spacepotatis-galaxy-overworld.js` (which he confirmed nailed the style for galaxy-overworld views going forward), but with technology / sci-fi nuances added because this galaxy hosts technologically advanced enemies.
+
+**Change:** New track, sister piece to galaxy 1. Same skeleton (cpm 15, ~60 BPM feel, 16-bar loop, four 4-bar chord sections, no drums, sparse + reverberant), recolored for "alien advanced tech":
+
+- KEY: E dorian (galaxy 1 was D minor — adjacent modal world, reads as same "family" but distinct)
+- PROGRESSION: Em9 → Bm9 → Cmaj7(#11) → Am9
+  - Cmaj7(#11) is the keystone — the F# is borrowed from C lydian, the canonical "alien / sci-fi advanced tech" sparkle chord
+  - Bm9 has C# from E dorian = subtle brightness vs natural minor
+- LAYERS (8):
+  - sub drone (sine on roots, identical role to galaxy 1)
+  - chord pad (detuned saw, perlin LPF breathing, jux stereo — same recipe as galaxy 1, lydian #11 voicings)
+  - triangle warmth pad (same role as galaxy 1's pad layer 2)
+  - **tracker arp** (square wave, 8th-note sequenced arpeggio, lpq 3) — REPLACES galaxy 1's soft triangle bell with a tighter, more digital voice = "computer / data stream"
+  - **sonar ping** (NEW — sine on e7/f#7/g7/a6, one hit every 4 bars, long delay + 0.85 room, wide pan drift) = "scanner sweep cycle"
+  - distant high shimmer (same as galaxy 1)
+  - **tech transmission** (NEW — bandpassed square blip burst once every 8 bars, panned 0.72) = "distant alien comms chatter"
+  - stellar wind hat swell (same as galaxy 1, identical settings)
+
+**Why these choices for "tech/sci-fi nuance without breaking the family resemblance":**
+- Kept 5 of 6 galaxy-1 layers verbatim in role (sub drone / chord pad / pad layer 2 / high shimmer / stellar wind) so the new track immediately reads as "same world, next zone"
+- The 3 changes that carry the tech color are all distinct timbral choices (square instead of triangle for arp, sine sonar pings, square blip transmissions) — easier for the ear to read as "tech" than EQ tweaks
+- Sonar (every 4 bars) and transmission (every 8 bars) are very sparse on purpose — adds tech texture without crowding the contemplative pace
+- Lydian #11 chord = single most recognizable "advanced sci-fi" harmonic gesture (Star Trek TNG, Mass Effect, Stellaris all lean on it); only used on chord 3 of 4 so it doesn't become the whole identity
+
+**Outcome:** awaiting playback feedback. If approved, candidate to extract the tracker arp + sonar ping + transmission blip as reusable `patterns/components/synths/` and `fx/` pieces for future "advanced tech" zones.
+
+---
+
+## 2026-05-01 — Spacepotatis galaxy overworld 2 — iteration 2 (kill the ear-pain beeps)
+
+**Track / component:** `patterns/tracks/spacepotatis-galaxy-overworld2.js`
+
+**Feedback from Mikko:** "good start. Keep the idea, but the high frequency beeps really hurt ears. Replace them with something as cool and technology like."
+
+**Diagnosis:** The two new tech layers from v1 (sonar ping at e7/f#7/g7/a6 ≈ 1760–3136 Hz, and tech transmission at e6/b6/d7 ≈ 1318–2349 Hz) sat right on the ear-pain band (2–4 kHz is the ear's most sensitive region). Both also had near-instant attacks (0.005s and 0.001s) which gave them piercing transients on top of the high pitch.
+
+**Change:** Kept both layers in their structural roles (every-4-bars scanner sweep + every-8-bars data burst). Recolored both:
+
+- **Sonar ping → "alien sonar swell"**: pitched down 2 octaves (e5/f#5/g5/a4 ≈ 440–784 Hz). Attack lengthened from 0.005s → 0.4s — so it pulses IN rather than beeps. LPF added at 2200 Hz to clip the high overtones. Same delay/room/pan envelope so the spatial signature is preserved.
+- **Tech transmission → "encrypted data burst"**: pitched down 1 octave (e4/b4/d5/a4/e5/b4 ≈ 330–660 Hz core, with one note up to e5). Bandpass tightened: HPF 350 + LPF 1600. Burst expanded from 4 → 6 sub-events to read more like a "modem handshake" pattern. Attack softened 0.001s → 0.005s to take the click off the front.
+
+**Why this preserves the tech identity:**
+- Square-wave timbre + bandpass shaping is exactly what reads as "modem / data" — the pitch was carrying the sci-fi flag, but the *timbre* was carrying the tech flag. Drop pitch, keep timbre, identity survives.
+- Sonar at e5/f#5/g5/a4 still tracks E dorian + the lydian #11 (g5 over Cmaj7#11 = the alien sparkle note) — same harmonic role as v1.
+- Soft attack on the sonar swell turns it from "ping" into "ping bloom" — arguably MORE alien-tech (pulses don't physically attack instantly in low-pressure space), so the change is musically justified, not just defensive.
+
+**Outcome:** awaiting playback feedback.
