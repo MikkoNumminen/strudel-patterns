@@ -1,106 +1,116 @@
-// Spacepotatis — shop / market music (v2: humor-dominant + progressive)
-// Genre: cartoonish prog-jazz solo over sci-fi ambient lounge backing
-// Tempo: 96 BPM, .cpm(24) — 1 cycle = 1 bar of 4 beats
-// Key: F major — Fmaj9 – Dm9 – Gm11 – C13  (I-vi-ii-V with jazz extensions)
-//      Each chord 4 bars, progression plays twice across 32 bars.
-// Length: 32 bars = 80 seconds
-// Role: market / shop background — humor twist now dominates because trading is FUN,
-//        and the theremin solo runs prog-style across the whole loop.
+// Spacepotatis — shop / market music (v3: sci-fi ambient on a bass-ostinato spine)
+// Genre: weird space-jazz ambient (Twin Peaks Roadhouse × Blade Runner × ECM-ambient)
+// Tempo: 80 BPM, .cpm(20) — 1 cycle = 1 bar of 4 beats = 3 seconds
+// Key: D dorian — modal, neither bright nor dark; pedal-D throughout
+//      Pad cycle: Dm9 → Cmaj7(#11) → B♭maj7(#11) → A7sus  (each chord 4 bars, 16-bar loop)
+// Length: 32 bars = 96 seconds (chord cycle plays twice for natural variation)
+// Role: shop / market background. Trade is meditative + alien, not childlike.
 //
-// v2 changes vs v1 (per Mikko's feedback "more humor twist, way less other stuff,
-//                   more progressive"):
-//   - Humor sine theremin is THE lead voice for all 32 bars (was: 8 bars only)
-//   - Original main saw lead REMOVED entirely
-//   - Drums / comping / shimmer / cowbell gain reduced 30-40% — theremin owns the foreground
-//   - Pad voicings upgraded from triads → 9ths / 11ths / 13ths (prog-jazz harmony)
-//   - Theremin now develops in 4 progressive sections (8 bars each):
-//       bars 1-8   THEME    intro phrasing, chromatic gag (b5 over Fmaj9)
-//       bars 9-16  CHORUS   elaboration; wider intervals; eb6 chromatic gag over Gm11
-//       bars 17-24 SOLO     prog climax — fast 8th-note runs, octave leaps, full
-//                            chromatic climb (a-b-c-c#-d-d#-e-f) on bar 23
-//       bars 25-32 OUTRO    return to theme, settles for clean loop point
+// v3 redesign brief (Mikko, Finnish): v2 sounded like a children's song +
+// the high-frequency atmosphere hurt eardrums. Reset to:
+//   - sci-fi ambient soundscape, weird and spacey
+//   - rhythm carried by a self-repeating bass ostinato (the spine)
+//   - everything else is strange spacey ambient texture; can lean jazzy
+//   - NO clear lead melody, NO ear-piercing high content
+//
+// Design rules vs v1/v2:
+//   1. NO theremin / sing-song melody — the previous lead is gone entirely.
+//   2. Bass plays the SAME 8-note motif every bar (d2 ~ a2 c3 ~ a2 d2 ~)
+//        regardless of the chord above — it's a groove anchor, not harmonized.
+//   3. Pad voicings use sus + 9 + #11 extensions = modal jazz, not diatonic pop.
+//   4. Highest frequency content stays under ~2.5 kHz on every layer.
+//   5. Ambient textures use perlin / degradeBy / sometimes for non-repetition.
 
 stack(
   // ============================================================================
-  // DRUMS — soft jazz kit, REDUCED gain so theremin dominates
+  // BASS OSTINATO — the rhythmic spine. Same 8-note cell every bar.
+  //                  d2 ~ a2 c3 ~ a2 d2 ~  = root, 5th, b7, 5th, root
+  //                  syncopated 8ths = jazz-leaning groove without going walking
   // ============================================================================
 
-  // kick — beats 1 and 3 (gentler than v1)
-  s("bd ~ ~ ~ bd ~ ~ ~").gain(0.5).shape(0.12),
-
-  // rim — backbeat (jazz brush feel)
-  s("~ rim ~ rim").gain(0.32).hpf(800).room(0.25),
-
-  // hi-hat — 8th tssk, dropped gain
-  s("hh*8").gain(sine.range(0.12, 0.22).fast(2)).hpf(7500).cut(1),
-
-  // (cowbell removed — too busy alongside the theremin)
-
-  // ============================================================================
-  // WALKING BASS — quarter-note saw bass walking through chord tones
-  // ============================================================================
-
-  note("<[f2 c3 f2 a2] [f2 c3 f2 a2] [f2 c3 f2 a2] [f2 c3 f2 a2] [d2 a2 d3 f2] [d2 a2 d3 f2] [d2 a2 d3 f2] [d2 a2 d3 f2] [g2 d3 g2 bb2] [g2 d3 g2 bb2] [g2 d3 g2 bb2] [g2 d3 g2 bb2] [c2 g2 c3 e2] [c2 g2 c3 e2] [c2 g2 c3 e2] [c2 g2 c3 e2] [f2 c3 f2 a2] [f2 c3 f2 a2] [f2 c3 f2 a2] [f2 c3 f2 a2] [d2 a2 d3 f2] [d2 a2 d3 f2] [d2 a2 d3 f2] [d2 a2 d3 f2] [g2 d3 g2 bb2] [g2 d3 g2 bb2] [g2 d3 g2 bb2] [g2 d3 g2 bb2] [c2 g2 c3 e2] [c2 g2 c3 e2] [c2 g2 c3 e2] [c2 g2 c3 e2]>")
+  note("d2 ~ a2 c3 ~ a2 d2 ~")
     .s("sawtooth")
-    .attack(0.005).decay(0.18).sustain(0.4).release(0.1)
-    .lpf(1500).lpq(2)
+    .attack(0.005).decay(0.18).sustain(0.4).release(0.15)
+    .lpf(750).lpq(3)
+    .shape(0.18)
     .gain(0.6),
 
   // ============================================================================
-  // RHODES COMPING — sparser than v1 (one stab per bar instead of two)
-  //                   so it leaves room for the theremin solo
+  // SUB DRONE — long sustained sine on D pedal. Modal foundation.
   // ============================================================================
 
-  note("<[f3,a3,c4,e4,g4] [f3,a3,c4,e4,g4] [f3,a3,c4,e4,g4] [f3,a3,c4,e4,g4] [d3,f3,a3,c4,e4] [d3,f3,a3,c4,e4] [d3,f3,a3,c4,e4] [d3,f3,a3,c4,e4] [g3,bb3,d4,f4,c5] [g3,bb3,d4,f4,c5] [g3,bb3,d4,f4,c5] [g3,bb3,d4,f4,c5] [c3,e3,g3,bb3,a4] [c3,e3,g3,bb3,a4] [c3,e3,g3,bb3,a4] [c3,e3,g3,bb3,a4] [f3,a3,c4,e4,g4] [f3,a3,c4,e4,g4] [f3,a3,c4,e4,g4] [f3,a3,c4,e4,g4] [d3,f3,a3,c4,e4] [d3,f3,a3,c4,e4] [d3,f3,a3,c4,e4] [d3,f3,a3,c4,e4] [g3,bb3,d4,f4,c5] [g3,bb3,d4,f4,c5] [g3,bb3,d4,f4,c5] [g3,bb3,d4,f4,c5] [c3,e3,g3,bb3,a4] [c3,e3,g3,bb3,a4] [c3,e3,g3,bb3,a4] [c3,e3,g3,bb3,a4]>")
-    .struct("~ 1 ~ ~ ~ ~ ~ ~")
-    .s("triangle")
-    .attack(0.005).decay(0.5).sustain(0.15).release(0.4)
-    .lpf(3500)
-    .gain(0.28)
-    .room(0.35)
-    .delay(0.2).delaytime(0.375).delayfeedback(0.3),
+  note("d1").s("sine")
+    .attack(3).decay(1).sustain(0.95).release(4)
+    .gain(0.55).room(0.4),
 
   // ============================================================================
-  // PAD — sustained vowel-formant pad with PROG-JAZZ extended chord voicings
-  //       Fmaj9 / Dm9 / Gm11 / C13 — the 9ths/11ths/13ths give prog richness
+  // CHORD PAD — modal jazz voicings, vowel formant, perlin filter breathing.
+  //              Dm9 → Cmaj7(#11) → B♭maj7(#11) → A7sus
+  //              All voicings use 9 / #11 / sus = no diatonic pop sweetness
   // ============================================================================
 
-  note("<[a3,c4,e4,g4] [a3,c4,e4,g4] [a3,c4,e4,g4] [a3,c4,e4,g4] [f3,a3,c4,e4] [f3,a3,c4,e4] [f3,a3,c4,e4] [f3,a3,c4,e4] [bb3,d4,f4,c5] [bb3,d4,f4,c5] [bb3,d4,f4,c5] [bb3,d4,f4,c5] [e3,g3,bb3,a4] [e3,g3,bb3,a4] [e3,g3,bb3,a4] [e3,g3,bb3,a4] [a3,c4,e4,g4] [a3,c4,e4,g4] [a3,c4,e4,g4] [a3,c4,e4,g4] [f3,a3,c4,e4] [f3,a3,c4,e4] [f3,a3,c4,e4] [f3,a3,c4,e4] [bb3,d4,f4,c5] [bb3,d4,f4,c5] [bb3,d4,f4,c5] [bb3,d4,f4,c5] [e3,g3,bb3,a4] [e3,g3,bb3,a4] [e3,g3,bb3,a4] [e3,g3,bb3,a4]>")
+  note("<[d3,f3,a3,c4,e4] [c3,e3,g3,b3,f#4] [bb2,d3,f3,a3,e4] [a2,d3,e3,g3,b3]>").slow(4)
     .s("sawtooth")
-    .attack(2).decay(1).sustain(0.8).release(2)
-    .lpf(perlin.range(1500, 2800).slow(16)).lpq(2)
-    .vowel("<a o e o>".slow(8))
-    .gain(0.32)
-    .room(0.55)
+    .attack(3.5).decay(2).sustain(0.85).release(5)
+    .lpf(perlin.range(800, 2200).slow(24)).lpq(2)
+    .vowel("<a o u e>".slow(16))
+    .gain(0.3)
+    .room(0.7)
     .jux(x => x.add(0.08)),
 
   // ============================================================================
-  // HIGH SHIMMER — sparse, REDUCED gain so theremin shines
+  // SPARSE RHODES — random jazz stabs, one per bar at an off-beat 16th position.
+  //                  triangle wave + dotted-8th delay = old-radio Rhodes feel.
+  //                  .sometimes(add(5)) randomly transposes a stab up a 4th = jazz substitution
   // ============================================================================
 
-  note("<f5 a5 c6 a5 a5 c6 d6 c6 d6 f6 g6 f6 g6 e6 c6 e6 f5 a5 c6 a5 a5 c6 d6 c6 d6 f6 g6 f6 g6 e6 c6 e6>").s("sine")
-    .attack(0.05).release(0.9)
-    .gain(0.12)
-    .delay(0.55).delaytime(0.5).delayfeedback(0.5)
-    .room(0.7)
-    .pan(sine.range(0.3, 0.7).slow(11)),
+  note("<[d3,f3,a3,c4] [c3,e3,g3,b3] [bb2,d3,f3,a3] [a2,c#3,e3,g3]>").slow(4)
+    .struct("~ ~ ~ 1 ~ ~ ~ ~")
+    .s("triangle")
+    .attack(0.005).decay(0.5).sustain(0.1).release(0.6)
+    .lpf(2200)
+    .gain(0.22)
+    .delay(0.4).delaytime(0.375).delayfeedback(0.5)
+    .room(0.5)
+    .sometimes(x => x.add(5))
+    .degradeBy(0.4),
 
   // ============================================================================
-  // THEREMIN — humor-dominant lead voice, plays bars 1-32 with prog development
-  //
-  // bars 1-8   THEME    chromatic intro, b5 = "wrong note" gag
-  // bars 9-16  CHORUS   elaboration, eb6 chromatic gag, climbs higher
-  // bars 17-24 SOLO     prog climax — fast 8th-runs, octave leaps,
-  //                       FULL CHROMATIC CLIMB on bar 23 (a-b-c-c#-d-d#-e-f)
-  // bars 25-32 OUTRO    return to theme, settle for loop point
+  // ATMOSPHERIC WASH — bandpassed white noise, slow filter drift, very soft.
+  //                     Sits behind everything; reads as "air conditioning on
+  //                     an alien space station". One swell every 2 bars.
   // ============================================================================
 
-  note("<[c6 d6 e6 f6 e6 d6 c6 a5] [f5 a5 c6 e6 g6 e6 c6 a5] [a5 b5 c6 d6 e6 f6 e6 d6] [c6 d6 e6 c6 a5 f5 ~ ~] [d6 c6 a5 d5 f5 a5 c6 e6] [a5 b5 c6 d6 e6 d6 c6 a5] [f5 a5 c6 a5 d6 a5 f5 ~] [a5 c6 d6 c6 a5 f5 d5 ~] [g5 bb5 d6 f6 d6 c6 bb5 g5] [bb5 d6 f6 g6 a6 g6 f6 d6] [bb5 c6 d6 eb6 d6 c6 bb5 g5] [d6 f6 g6 bb6 a6 g6 f6 d6] [c6 e6 g6 bb5 g5 e5 c5 ~] [e6 g6 bb6 c7 bb6 g6 e6 c6] [c6 e6 g6 a6 g6 f#6 g6 e6] [bb5 c6 d6 e6 ~ a5 g5 ~] [c6 d6 e6 f6 g6 a6 c7 a6] [a6 g6 f6 e6 d6 c6 b5 a5] [c6 e6 g6 c7 e7 c7 g6 e6] [f5 a5 c6 e6 g6 e6 c6 a5] [d5 f5 a5 d6 f6 a6 d7 a6] [a6 d7 a6 f6 d6 a5 f5 d5] [a5 b5 c6 c#6 d6 d#6 e6 f6] [a5 c6 e6 g6 a6 g6 e6 c6] [g5 bb5 d6 f6 d6 c6 bb5 g5] [bb5 c6 d6 eb6 d6 c6 bb5 g5] [g5 bb5 d6 f6 g6 f6 d6 ~] [~ ~ f6 d6 bb5 g5 ~ ~] [c6 e6 g6 bb5 g5 e5 c5 ~] [~ ~ g5 bb5 c6 e6 g6 ~] [c6 e6 g6 bb5 ~ a5 g5 ~] [~ e5 c5 a4 ~ ~ ~ ~]>")
+  s("white").struct("1 ~")
+    .attack(1.2).decay(0.6).sustain(0.4).release(1.6)
+    .bpf(perlin.range(700, 1700).slow(13)).bpq(7)
+    .gain(0.09)
+    .pan(sine.range(0.25, 0.75).slow(11))
+    .room(0.6),
+
+  // ============================================================================
+  // ALIEN PLUCKS — sparse mid-range bell tones, randomized pitch & timing.
+  //                  bandpass 700–1500 Hz keeps them muffled-warm, not glassy.
+  //                  degradeBy(0.55) = roughly half the notes drop = sparse texture
+  // ============================================================================
+
+  note("<a4 d5 c5 g4 f4 c5 a4 e5 d4 a4 c5 e4>").slow(3)
     .s("sine")
-    .attack(0.02).decay(0.25).sustain(0.7).release(0.4)
-    .lpf(8000)
-    .gain(0.7)
-    .room(0.45)
-    .delay(0.4).delaytime(0.375).delayfeedback(0.4)
-    .pan(sine.range(0.35, 0.65).slow(7))
-).cpm(24)
+    .attack(0.005).decay(0.2).sustain(0.15).release(0.7)
+    .bpf(perlin.range(700, 1500).slow(7)).bpq(6)
+    .gain(0.18)
+    .delay(0.55).delaytime(0.5).delayfeedback(0.6)
+    .room(0.75)
+    .pan(perlin.range(0.15, 0.85).slow(13))
+    .degradeBy(0.55),
+
+  // ============================================================================
+  // TAPE PULSE — extremely slow sub LFO breathing on D, "machine alive" cue.
+  //               Below 180 Hz so it never fights the bass ostinato up top.
+  // ============================================================================
+
+  note("d1").s("sine")
+    .attack(4).release(4)
+    .lpf(180)
+    .gain(sine.range(0.0, 0.18).slow(16))
+).cpm(20)

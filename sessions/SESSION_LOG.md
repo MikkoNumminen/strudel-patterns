@@ -563,3 +563,42 @@ Translation: "duri" = duuri = major key. He liked the fast `.every(8, x => x.fas
 - Soft attack on the sonar swell turns it from "ping" into "ping bloom" — arguably MORE alien-tech (pulses don't physically attack instantly in low-pressure space), so the change is musically justified, not just defensive.
 
 **Outcome:** awaiting playback feedback.
+
+---
+
+## 2026-05-04 — Spacepotatis shop iteration 3 (full reset: sci-fi ambient on a bass-ostinato spine)
+
+**Track / component:** `patterns/tracks/spacepotatis-shop.js` (complete rewrite — v2 was never deployed)
+
+**Feedback from Mikko (Finnish, full reset request):** "Aloitetaan alusta. Ajatus oli hyvä mutta kuulostaa lastenlaululta sekä ambientti ääni jolla on korkea taajuus taustalla särkee tärykalvoja. Haluan scifimäisen ambientti äänimaailman kauppaan. Tavoite olisi, että kappaleessa olisi jonkunlainen rytmi. Esim itseään toistava basso joka pitäisi pakettia vähän kasassa, ja kaikki muu omituista avaruusaiheista ambienttia, voi olla jazzahtavaa."
+
+Translation: scrap and restart. v2 sounds like a children's song + the high-frequency ambient hurts eardrums. Wants sci-fi ambient with a self-repeating bass ostinato as the rhythmic spine, everything else strange spacey ambient texture, can lean jazzy.
+
+**Diagnosis of v2's "lastenlaulu" problem:**
+- F major + sine theremin playing recognizable singable 8-note phrases = nursery-rhyme DNA. The theremin lead was the entire personality, and that personality was diatonic, melodic, lyrical.
+- Pad LPF 1500–2800 Hz + theremin LPF 8000 Hz + sine shimmer at oct 5–7 stacked all the energy in the 2–6 kHz range = ear pain band.
+
+**Change: full rewrite — every layer reconceived around the new brief.**
+
+- TEMPO: 96 → **80 BPM** (`.cpm(20)`). Slower, more meditative, more space.
+- KEY: F major → **D dorian** (modal, neither bright nor dark — Miles Davis "So What" territory).
+- PROGRESSION: I-vi-ii-V (Fmaj9-Dm9-Gm11-C13) → **Dm9 → Cmaj7(#11) → B♭maj7(#11) → A7sus**. All voicings use 9 / #11 / sus extensions = modal jazz, not diatonic pop sweetness.
+- LENGTH: 32 bars / 96 sec preserved (chord cycle plays twice for natural variation across the loop).
+- LAYERS (7) — designed top-down to enforce "no melody, no high content":
+  1. **BASS OSTINATO** (`d2 ~ a2 c3 ~ a2 d2 ~` syncopated 8ths) — the rhythmic spine. Same 8-note cell every bar, regardless of the chord above. Saw, LPF 750 Hz, shape 0.18 — warm, not glassy.
+  2. **SUB DRONE** — sine on D pedal, foundation.
+  3. **CHORD PAD** — detuned saw, vowel formant cycling `a o u e` slow(16), perlin LPF 800–2200 Hz slow(24) breathing, jux(0.08) for stereo width.
+  4. **SPARSE RHODES** — triangle wave, one stab per bar at an off-beat 16th, dotted-8th delay, `.sometimes(add(5))` for occasional jazz substitution, degradeBy(0.4).
+  5. **ATMOSPHERIC WASH** — `s("white")` with bpf(700–1700 Hz) perlin drift, swelling once every 2 bars at gain 0.09 — reads as "air conditioning on an alien space station".
+  6. **ALIEN PLUCKS** — sine, bandpass 700–1500 Hz (NEVER glassy), randomized notes from D dorian on slow(3), pan perlin drift, degradeBy(0.55) so roughly half drop. This is the "weird space jazz" texture.
+  7. **TAPE PULSE** — sub-180 Hz sine on D with sine.range(0, 0.18).slow(16) gain envelope = imperceptibly slow breathing on the foundation.
+
+**Why this addresses both complaints:**
+- "Lastenlaulu" (children's song): NO theremin / lead melody at all. Only fragmented atmosphere + a non-melodic bass ostinato. The Rhodes stabs and alien plucks are sparse enough they never form a hummable line. Modal jazz harmony (sus / 9 / #11 voicings) has zero diatonic pop sweetness.
+- "High frequencies hurt eardrums": every layer is hard-capped under ~2.5 kHz. Pad LPF max 2200 Hz. Plucks bandpassed to 700–1500 Hz (the warmest part of the spectrum). Atmospheric wash bandpassed 700–1700 Hz. Rhodes LPF 2200 Hz. Sub drone is unfiltered but only fires harmonics of d1 (≈37 Hz fundamental) so all its energy is below 1 kHz. The 2–6 kHz pain band is intentionally empty.
+
+**Why a bass ostinato (not walking bass or harmonized line):**
+- Mikko explicitly asked for a "self-repeating bass" as the groove anchor. A walking bass changes every bar — that's a melodic instrument. An ostinato is a rhythmic instrument that happens to have pitch. Same 8 notes every bar is the spine; the harmony-changing pad floats above without disturbing the groove.
+- The d-a-c-a contour traces D dorian skeleton notes (root, 5th, b7, 5th) which work over Dm9 / Cmaj7#11 / B♭maj7#11 / A7sus equally well — modal pivot pitches, no harmonic clash on any chord.
+
+**Outcome:** awaiting playback feedback. v2 is in git history (commit `d296e16`) if any pad / Rhodes voicing turns out to be worth salvaging.
