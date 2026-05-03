@@ -387,3 +387,126 @@ Translation: "duri" = duuri = major key. He liked the fast `.every(8, x => x.fas
 **Why no drums:** any rhythmic pulse pulls the listener's ear off the storyteller. For grandmotherly storytelling underscore, drums are the wrong tool — needs to be a pad bed.
 
 **Outcome:** Mikko approved on the first listen ("this is great! push as storymusic1 for space potatis"). File renamed `spacepotatis-story1.js` → `spacepotatis-storymusic1.js` per his exact wording, header updated, README row added. Committed and pushed. Naming convention extended: `spacepotatis-storymusic<N>.js` for narration underscores (alongside `spacepotatis-mission<N>.js` for combat themes).
+
+---
+
+## 2026-04-29 — Spacepotatis shop / market music
+
+**Track / component:** `patterns/tracks/spacepotatis-shop.js`
+
+**Brief from Mikko (Finnish, with two follow-ups):**
+1. "Hyvä. Nyt tarvitsemme menevän musiikin kauppaan. pysymme scifi teemassa ja ambientissa, mutta voisi olla startrekkiläistä prokeilua ja jazzia" — driving music for the shop, sci-fi + ambient, with Star Trek prog vibes and jazz.
+2. "pelaaja voi olla tässä valikossa pitemmän aikaa joten kappaleella on aikaa kehittyä ja muuttua. haluan kuitenkin, että jotain tapahtuu jo ensimmäisen viiden sekunnin kohdalla" — player camps here a while; track must develop; something must happen in the first 5 sec.
+3. "Lisäksi haluan siihen humoristisen tvistin, koska muu musiikki saattaa olla vakavampaa, mutta kaupanteko on kivaa" — humorous twist; trading is fun, while the rest of the soundtrack is more serious.
+
+**Change:** Started as a 16-bar (40s) lounge loop, then expanded per the follow-ups into an 80-second piece with development and a comedic cameo.
+
+- TEMPO: 96 BPM (`.cpm(24)`) — laid-back lounge pace
+- KEY: F major. Progression **Fmaj7 – Dm7 – Gm7 – C7** (I-vi-ii-V — the canonical jazz cadence) with full 7th-chord extensions: maj7 on F (e), m7 on Dm (c), m7 on Gm (f), dom7 on C (bb = leading-tone pull back to F).
+- LENGTH: 32 bars = 80 seconds. Chord progression plays twice (each chord 4 bars).
+- STRUCTURE (3 sections in the loop):
+  - **bars 1–16 (0–40s)**: main lounge — drums + bass + comping + pad + lead all hit at bar 1. Lead's opening lick (`f5 a5 c6 a5 g5 e5 f5 ~`) lands inside 5 sec, satisfying the "something must happen early" requirement.
+  - **bars 17–24 (40–60s)**: HUMOR TWIST — main saw lead drops; cartoonish sine "theremin" enters with chromatic non-diatonic moves (b5 over Fmaj7, eb6 implied, f#6 — "wrong notes" played confidently = the comedic gag). Crash sting at bar 17 marks the entry.
+  - **bars 25–32 (60–80s)**: humor lead leaves; main saw lead returns over Gm7→C7 to round out. Crash sting at bar 25 marks the return.
+- LAYERS (8): `bd ~ ~ ~ bd ~ ~ ~` half-time kick, beat-2/4 rim (jazz brush feel, not full snare), 8th hats, `~ ~ cb ~` cowbell ride accent, walking saw bass (root–5th–root–3rd quarter notes), Rhodes-style triangle comping with `.struct("~ 1 ~ ~ ~ 1 ~ ~")` Charleston rhythm + dotted-8th delay, vowel-formant pad, sparse high sine shimmer, main noodle saw lead (sax-like phrasing with breath rests), HUMOR TWIST sine theremin (masked to bars 17–24), transition crash stings on bars 17 and 25.
+- "DEVELOP & CHANGE" requirement: humor twist is the primary development. Pad has perlin LPF breathing. Vowel cycles a-o-e-o. Lead phrases are 4-bars-per-chord, no immediate repetition until bar 17.
+
+**Why these specific choices for the humor:**
+- Sine wave (vs. saw or square) sounds soft and theremin-ish — alien jazz singer rather than aggressive synth lead
+- Chromatic non-diatonic notes (b5, eb6) over major-key chords = the comedic "almost-wrong-note" trick used in cartoon scoring (Carl Stalling, Looney Tunes era)
+- High register (oct 5-6) puts it ABOVE the main lead's register — unmistakably "different"
+- Light delay tail makes the goofy notes echo, leaning into the comedy
+
+**Outcome:** awaiting playback feedback. Designed to loop cleanly every 80s; player rotation through the shop should reliably hit the humor cameo at least once if they spend more than ~40s browsing.
+
+---
+
+## 2026-04-29 — Spacepotatis shop iteration 2 (humor-dominant + progressive)
+
+**Track / component:** `patterns/tracks/spacepotatis-shop.js` (full rewrite of the lead architecture)
+
+**Feedback from Mikko:** "We must iterate this a bit. I want more of the humor twist and way less of the other stuff. Also more progressive"
+
+**Diagnosis of v1:** humor was a cameo (8 of 32 bars = 25% of the track). Mikko wants it to be the personality of the entire track. "More progressive" = deeper development within the solo + richer harmony.
+
+**Change:** Complete restructure of the lead architecture; backing layers preserved but reduced in gain.
+
+- **Theremin = THE lead voice for all 32 bars** (was: only 8 bars in v1). Original main saw lead REMOVED entirely; humor took its job.
+- **Backing layers reduced**: drums gain 0.7→0.5 (kick), 0.45→0.32 (rim), 0.32→0.22 (hats); cowbell removed; comping density halved (`struct("~ 1 ~ ~ ~ ~ ~ ~")` = one stab per bar instead of two); shimmer gain 0.18→0.12. The theremin owns the foreground now.
+- **Pad voicings extended for prog-jazz**: triads → 9ths/11ths/13ths
+  - Fmaj9 = `[a3,c4,e4,g4]` (g = the 9th)
+  - Dm9   = `[f3,a3,c4,e4]` (e = the 9th)
+  - Gm11  = `[bb3,d4,f4,c5]` (c5 = the 11th)
+  - C13   = `[e3,g3,bb3,a4]` (a4 = the 13th)
+- **Theremin solo follows prog song form** in 4 sections of 8 bars:
+  - bars 1–8 THEME: chromatic climb intro `c6 d6 e6 f6...`, `b5` non-diatonic gag at bar 3
+  - bars 9–16 CHORUS: elaboration, climbs higher to c7, `eb6` chromatic gag at bar 11, `f#6` at bar 15
+  - bars 17–24 SOLO: prog climax — fast 8th-note runs, octave leaps (e5→c7), and a **full chromatic ascent** on bar 23 (`a5 b5 c6 c#6 d6 d#6 e6 f6` — every half-step in order, the prog rock signature move)
+  - bars 25–32 OUTRO: returns to the theme phrasing, descends and settles to `a4` at bar 32 = perfect loop-point setup
+
+**The "more progressive" elements specifically:**
+- Pad with 9th/11th/13th extensions = jazz fusion / Steely Dan / prog-jazz harmony
+- Theremin uses bar-by-bar developmental phrasing (theme → chorus → climax → outro) instead of a single repeating motif
+- Bar 23 chromatic climb (8 consecutive half-steps) is a textbook prog-rock virtuoso move
+- Octave leaps in bar 19 (`c6 e6 g6 c7 e7 c7 g6 e6` spans c6 to e7 = an octave + 3rd) = prog drama
+- Chromatic non-diatonic notes (b5, eb6, f#6, c#6, d#6) sprinkled throughout = the cartoonish "wrong-note-played-confidently" gag and prog harmonic boldness rolled into one
+
+**Outcome:** awaiting playback feedback.
+
+---
+
+## 2026-04-29 — Spacepotatis storymusic 2 (Galaxy Transition / Tubernovae Cluster warp narration)
+
+**Track / component:** `patterns/tracks/spacepotatis-storymusic2.js`
+
+**Brief from Mikko:** music for a galaxy-transition cutscene. Grandmotherly storytelling voice reads the Tubernovae Cluster narration (~78s of text, ending with "Three... two... one... Punch it." warp jump countdown). Wants ambient melodical underscore that's "ultra positive" but also "brings a change" (i.e., evolves through the piece, not a static loop).
+
+**Change:** New track, structurally and tonally distinct from storymusic1.
+
+- TEMPO: 60 BPM, `.cpm(15)` (same as storymusic1 for VO-underscore consistency)
+- KEY: C major (positive, contrasts with storymusic1's A-minor solemnity)
+- LENGTH: 20 bars = 80 sec (storymusic1 was 8 bars / 32 sec — this one is longer because the narration is longer and needs a journey arc)
+- STRUCTURE — 5 sections of 4 bars each, narrative-aligned:
+  - bars 1–4   A peaceful retrospective    C – G – Am – F
+  - bars 5–8   B discovery                  F – G – Em – Am
+  - bars 9–12  C mystery                    Am – F – C – G
+  - bars 13–16 D anticipation               F – C – G – C
+  - bars 17–20 E warp climax / countdown    C – F – G – C
+- LAYERS (6): sub sine drone on chord roots; vowel-formant sawtooth pad with slow LPF "journey" sweep across the full 80s; triangle motif that climbs higher each section (oct 4-5 → oct 6-7 by climax); sparse sine shimmer with density rising toward the climax; **WARP SWELL** sustained C major triangle chord masked to bars 17–20 with filter opening 1000→7000 Hz and gain ramping (= "engines warming up" musical metaphor); **WARP STINGER** final chord burst at bar 20 only ("Punch it!").
+
+**Why these choices for "ultra positive + brings a change":**
+- C major foundation = ultra-positive baseline
+- Section progressions evolve harmonically (each section's chord set differs) = brings a change
+- Motif climbs higher each section = audible journey arc
+- LPF on pad opens gradually over 80s = continuous evolution
+- WARP SWELL + STINGER = the "Punch it!" payoff at the end is both the narrative AND musical climax
+- Only 6 layers, no drums = stays as VO underscore (won't fight grandmother's voice)
+
+**Outcome:** awaiting playback feedback. Designed for one-shot play under the narration; not meant to loop.
+
+---
+
+## 2026-04-30 — Spacepotatis mission 2 — repalette to 90s tracker space combat
+
+**Track / component:** `patterns/tracks/spacepotatis-mission2.js` (full sonic rework, structure preserved)
+
+**Brief from Mikko:** the original "aggressive major synthpop" reading of mission 2 didn't sit right next to mission 1 (combat synthwave) in the soundtrack. He wanted mission 2 to feel like a **90s tracker-era space combat theme** — Tyrian "Mars", Wipeout XL, Descent — same family as mission 1 but darker and grittier.
+
+**Change:** Kept the 32-bar structure (intro → main A → break → main B), kept the masking architecture, kept the Tyrian octave-bouncing bass + 16th arp + dotted-8th delay. Repainted everything else:
+
+- KEY: E major (I-vi-IV-V) → **E minor / Phrygian-flavored** `Em – F – C – D` (i-bII-bVI-bVII). The F over E = Phrygian b2 = the canonical 90s space-combat dread tone. D in bar 4 borrows F# as a leading-tone pull back to E.
+- PAD: stripped sparkle. Vowel formant (`a o`) for industrial color, LPF range pulled down (2000–3500 → 1500–2800), no high jux sparkle.
+- INTRO LEAD: dropped from oct 5 → oct 4 (low + menacing instead of sparkly statement). Climbs E→F→G→A across the 4 chords (Phrygian ascent).
+- DRUMS: kick + snare given `crush(12)` for 90s console grit. Cowbell added as combat percussion accent on last 8th of beats 2/4.
+- ARP: triangle → **square wave** (more bite, more chip-combat).
+- LEAD HOOK: triangle-bright saw → **distorted saw** (`shape(0.3)`), pulled down to oct 4–5 (mid register = menacing, not heroic). Phrasing rewritten with chromatic neighbor tones (b5 over Fmaj implied via 7th, c6 as leading tone descent over Cmaj, etc).
+- MAIN B: previously octave-up sparkle → **5th-up power-chord harmony** (`.add(7)`). Same hook, stacked, wider `.jux(0.15)` for fatter stereo. Power lift instead of brightness lift.
+- LEAD CONTINUITY: lead now plays bars 9–32 continuously (was 9–24 with a break gap). Carries the line through the break section, which is the 90s combat convention.
+
+**Why this preserves mission 2's identity while solving the brief:**
+- Structure (32-bar, 4 sections, masking) is unchanged — same arrangement DNA
+- Tyrian DNA (octave bass, 16th arp, dotted-8th delay) is unchanged — same era reference
+- Only the *palette* moved from major-synthpop to minor-Phrygian-tracker — surgical repaint, not a rewrite
+
+**Outcome:** committed. Sits next to mission 1 in the soundtrack now without tonal whiplash.
+
