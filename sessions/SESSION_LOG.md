@@ -602,3 +602,133 @@ Translation: scrap and restart. v2 sounds like a children's song + the high-freq
 - The d-a-c-a contour traces D dorian skeleton notes (root, 5th, b7, 5th) which work over Dm9 / Cmaj7#11 / B♭maj7#11 / A7sus equally well — modal pivot pitches, no harmonic clash on any chord.
 
 **Outcome:** awaiting playback feedback. v2 is in git history (commit `d296e16`) if any pad / Rhodes voicing turns out to be worth salvaging.
+
+---
+
+## 2026-05-13 — Mikko's portfolio landing page ambient drone
+
+**Track / component:** `patterns/tracks/mikkonumminen-dev-lander.js`
+
+**Brief from Mikko:** ambient music for his portfolio landing page (`mikkonumminen-dev.vercel.app`). Shared a screenshot — dark indigo cosmic theme, flying-star animations, galaxy spiral, solar flare with rays, big "MIKKO NUMMINEN" title. Wants "deep ambient space themed without a beat." First non-Spacepotatis track in the repo.
+
+**Change:** New track designed top-down as pure drift — no rhythmic anchor at all (no kick, hat, ostinato, or pulsed bass). The track is six overlapping sustained layers that move only via slow filter / vowel / gain LFO modulation, never via any rhythmic event.
+
+- TEMPO: `.cpm(10)` — 1 cycle = 6 seconds. Glacial.
+- KEY: D natural minor / D Aeolian — dark, vast, cosmic. Same root as Spacepotatis galaxy overworld 1 (Dm), but Aeolian instead of dorian for a slightly darker / colder feel that mirrors the deep-indigo visual palette.
+- PROGRESSION: Dm9 (8 bars / 48 s) → B♭maj9(#11) (4 bars / 24 s) → A7sus4 (4 bars / 24 s). The B♭maj9(#11) is the "majestic uplift" moment — major chord with #11 lydian color = the solar-flare-in-the-corner sonic analogue. A7sus4 doesn't resolve (sus instead of major 3rd) so the loop drifts back to Dm without a strong cadence = continuous drift, not phrased.
+- LENGTH: 16-bar loop = 96 seconds. Long enough not to feel obvious on first listen.
+- LAYERS (6):
+  1. **SUB DRONE** — sine on chord-root pedal (d1 / b♭0 / a0), gain 0.65, sub-50 Hz fundamentals.
+  2. **MAIN PAD** — detuned saw stack with vowel formant (`<o u a o>`.slow(24)), perlin LPF 500–1800 Hz slow(30), AND a slow gain LFO `sine.range(0.26, 0.38).slow(20)` — the 20-cycle gain LFO never aligns with the 16-cycle chord progression, so the breathing pattern is different every loop pass.
+  3. **WARM PAD** — triangle in upper-mid range, holds chord 3rd/5th/7th, LPF 1800 Hz.
+  4. **DISTANT STARS** — sparse sine twinkles, bandpass 800–2000 Hz (NEVER glassy / piercing), 0.6 s attack so they "appear" not "beep", `degradeBy(0.45)` so ~half drop per pass, perlin pan drift.
+  5. **SPECTRAL WASH** — `s("white")` bandpass 600–1700 Hz perlin slow(20), one swell per bar with an 8.5 s envelope = continuous overlap = "solar wind / cosmic background".
+  6. **FAR MOTIF** — extremely sparse 3-note "passing constellation" phrase across the full 16-bar loop (~one note every 24 s), `.sometimes(add(7))` for occasional 5th-up transposition.
+
+**Why this design serves a portfolio landing page specifically:**
+- Music must not demand attention — visitor is reading the page, scrolling, navigating. Every layer is mid-low frequency + low gain so it never competes with visual focus or any UI sound effects the page might trigger.
+- Visitor may enter and exit at any point (page reloads, route changes, returns from another tab). Track has no distinctive intro / outro — every 6-second cycle sounds similar enough that any cut-in / cut-out is graceful.
+- The 96-second loop is long enough that visitors who linger don't catch the loop point obviously, but short enough that the chord progression's "uplift moment" (B♭maj9#11 at the 48 s mark) hits within a typical visit.
+- All design rules from prior tracks applied: no 2–6 kHz pain band content (all layers LPF/BPF capped ~2.5 kHz), all attacks ≥0.5 s, stereo via perlin pan drift instead of hard panning.
+
+**Naming convention:** first non-Spacepotatis track in the repo. Used `mikko-` prefix instead of `spacepotatis-` to keep client/project namespace clean. Future personal-brand assets should follow this prefix.
+
+**Outcome:** awaiting playback feedback.
+
+---
+
+## 2026-05-13 — Mikko portfolio ambient iteration 2 (more positive, still abstract)
+
+**Track / component:** `patterns/tracks/mikkonumminen-dev-lander.js`
+
+**Feedback from Mikko:** "I want something a bit more positive but still abstract."
+
+**Diagnosis:** v1 was D Aeolian (natural minor) — inherently dark/melancholic at the modal level. No amount of mix tweaking would make a Dm9 → B♭maj9 → A7sus loop read as "positive" because the home chord is minor and the cadence chord is unresolved-tense. The "positive" lever in modal ambient is the mode itself.
+
+**Change:** Pivot the key center from D Aeolian (minor) to **F lydian** (major mode with raised 4th). Lydian's #11 (B natural over F) is the canonical "sci-fi positive wonder" sound — Mass Effect, Stellaris, Star Trek TNG main theme all rely on it. Everything else in the track is preserved unchanged: layer architecture, envelopes, design rules, modulation patterns, loop length.
+
+- KEY: D Aeolian → **F lydian** (F G A B C D E)
+- PROGRESSION: Dm9 → B♭maj9(#11) → A7sus4 (2 minors + 1 major) → **Fmaj7(#11) → Cmaj9 → G(add9)** (all major / sus, zero minors)
+- MOTION: still I → V → II → I, but now in F lydian. The non-classical I → V → II loop preserves the modal-floating / non-cadential feel = "still abstract".
+- The #11 sparkle is now in TWO places: the home chord Fmaj7(#11) carries B nat continuously for the first 48 s, and the distant stars layer includes b4 as a recurring twinkle note.
+- LPF ceilings nudged up ~200 Hz across pad layers (1800 → 2000, 2000 → 2200) to let a touch more brightness through — lydian needs the upper partials to bloom for the #11 to be heard.
+- Sub drone tracks the new bass: f1 → c2 → g1.
+
+**Why F lydian specifically (not F major or D major):**
+- **F major** would be too "diatonic pop bright" without the #11 — risks the "lastenlaulu" trap from shop v2. The lydian #11 keeps the harmony slightly off-axis = abstract.
+- **D lydian** would be too high/bright for a dark indigo cosmic visual. F is a warmer key (lower fundamentals than C or D), so the brightness comes from harmony, not register — matches the visual's deep + uplifting feel.
+- **F mixolydian** (b7 instead of #11) reads as "folk anthem / Star Wars Throne Room" — too rhythmic / Earthbound for a deep-space portfolio bed.
+- **F lydian** sits in the sweet spot: warm root, bright mode, otherworldly #11. Exactly the "more positive but still abstract" target.
+
+**Why the chord-quality change is enough (no other rewrites needed):**
+- v1's layer architecture was good — Mikko's only complaint was tonal mood, not arrangement or texture. Changing mode/voicings + 200 Hz LPF nudge changes the perceived mood substantially without altering the design.
+- Loop length, pacing, layer count, modulation rates, stereo strategy, ear-pain band avoidance — all unchanged. This is a true iteration, not a rewrite.
+
+**Outcome:** approved on tonal direction. Iteration request: faster melodic motion.
+
+---
+
+## 2026-05-13 — Mikko portfolio ambient iteration 3 (faster melodic motion)
+
+**Track / component:** `patterns/tracks/mikkonumminen-dev-lander.js`
+
+**Feedback from Mikko:** "This sounds better. Make the melody change faster."
+
+**Diagnosis:** In a beat-less ambient piece, "the melody" = the pitched event layers. This track has two: distant stars (sine twinkles) and far motif (longer triangle phrase). Both were at `.slow(16)` (events stretched across the full 16-bar loop) which made the perceived "melody" extremely sparse — roughly one twinkle every 12 s after degrade, and ~3 motif notes over the full 96-s pass. Mikko wants more pitched motion per second.
+
+**Change:** Speed up the two melodic layers; everything else preserved.
+
+- **Distant stars**: `.slow(16) → .slow(8)` AND denser pattern (8 → 11 audible notes per cycle of the pattern). Net effect: ~2.5× more frequent twinkles. New pattern: `<a4 ~ c5 b4 ~ d5 c5 ~ e5 ~ b4 a4 ~ d5 ~ c5>`.
+- **Far motif**: `.slow(16) → .slow(8)` AND denser (3 → 7 audible notes). New pattern: `<a4 ~ d5 ~ ~ c5 ~ e5 ~ ~ g5 ~ ~ a4 ~ b4>`. After degrade(0.3), roughly one motif note every 10 s — still ambient-sparse but actually perceivable as a melodic line now.
+- Pattern period is now 8 cycles (48 s) instead of 16. The stars + motif loop will repeat twice per chord-progression pass. `degradeBy` randomization ensures the two passes within a chord cycle don't sound identical.
+
+**Why not also speed up the chord progression:**
+- Mikko's ask was specifically about "the melody," not about harmony or chord changes. The chord progression at 8/4/4 bars (Fmaj7#11 home for 48 s + 2 quick changes) is currently calibrated to give portfolio visitors at least one chord change within a 30–90 s visit. Speeding it up wasn't requested and would risk over-iteration.
+- The faster melodic events do an end-run around the slow chord progression: more pitched notes per second means each chord context (even the 48-s Fmaj7#11 home) now carries multiple distinct melodic phrases instead of a single sparse event. Effective musical motion increases without touching the chord cycle.
+
+**Outcome:** partial success — melodies were liked, but the chord-progression staticness was still the bottleneck. Mikko escalated: "beginning is boring, takes too long; I want more progressive approach; 7 s max length of a part."
+
+---
+
+## 2026-05-13 — Mikko portfolio ambient iteration 4 + 5 (progressive structure + jazz randomization)
+
+**Track / component:** `patterns/tracks/mikkonumminen-dev-lander.js`
+
+**Feedback from Mikko (three asks across two messages):**
+1. "Beginning is boring, takes too long. I want more progressive approach. Avoid long pauses between changes. 7 s is the maximum length of a part."
+2. "You can randomize it a bit."
+3. "Add some scifi/space themed jazzy twist."
+
+**Diagnosis (v4 needs):** Previous v3 sat on Fmaj7(#11) for 48 s as the home chord = static for half the loop = "boring beginning". The melodic-density tweaks in v3 didn't fix this because the *harmonic* context wasn't moving. Mikko's "7 s max per part" is a hard structural rule: no element can stay unchanged longer than 7 seconds.
+
+**Change v4 — progressive structure:**
+- TEMPO: `.cpm(10)` → `.cpm(20)`. 1 bar = 3 s. Loop length 96 s → 48 s. Faster baseline pace.
+- PROGRESSION: 3 chords / 96 s → **8 chords / 48 s**. Each chord = 2 bars = 6 s. Every chord change lands inside the 7-s rule. Progression in F lydian: Fmaj7(#11) → Cmaj9 → Am9 → G(add9) → Cmaj9 → Fmaj7(#11) → G(add9) → Cmaj9 → loop. (I → V → iii → II → V → I → II → V — modal floating, never cadential.)
+- STRUCTURAL MASKS — two architectural events inside the loop:
+  - bar 3 (t=6 s): WARM PAD enters via `mask("<0 1 1 1 1 1 1 0>".slow(2))`
+  - bar 5 (t=12 s): FAR MOTIF enters via `mask("<0 0 1 1 1 1 1 0>".slow(2))`
+  - bar 15 (t=42 s): both fade out for clean loop reset
+- AUDIBLE-EVENT BUDGET inside one 48 s loop (no gaps > 6 s):
+  - t=0: track begins (sub + pad + stars + wash already audible)
+  - t=3–6: star twinkles every ~3 s
+  - t=6: warm pad swells in + chord 2 (Cmaj9)
+  - t=12: far motif first note + chord 3 (Am9)
+  - t=18 / 24 / 30 / 36: chord changes (G / C / F / G)
+  - t=42: chord 8 (C) + warm pad and motif fade
+  - t=48: loop point
+
+**Change v5 — randomization + sci-fi jazz twist** (immediately after v4, before testing):
+- **NEW JAZZ STAB layer** — triangle Rhodes-style with quartal "So What" voicings (stacked perfect 4ths = canonical modal jazz harmony from Miles Davis Kind of Blue). Per-chord stab with dotted-8th delay = the "Rhodes ringing through space" tail. `degradeBy(0.55)` → ~4 audible stabs per 48 s loop. `sometimes(add(12))` → ~half of those jump an octave up = spatial variety.
+- **Stars**: added `.sometimes(x => x.add(12))` → occasional octave-up sparkle.
+- **Far motif**: added `.sometimes(x => x.add(-5))` to complement the existing `.sometimes(add(7))` → up-fifth and down-fourth jazz ornaments = quartal motion.
+- All other layers preserved verbatim from v4.
+
+**Why quartal voicings for the jazz layer specifically:**
+- Tertian (3rds-stacked) chords are what the main pad already plays — adding more tertian harmony would just thicken the same color.
+- Quartal voicings (4ths-stacked) sound *different* from the pad harmony even though they imply the same chord. This is the textbook modal-jazz trick: "So What" chord = D-G-C-F-Bb = root + four stacked 4ths. It sounds modern, abstract, slightly Eastern, very Kind of Blue.
+- Quartal harmony reads as "jazz" without needing a walking bass / swing rhythm / shuffle — exactly what's needed in a no-beat ambient piece.
+
+**Why the dotted-8th delay on the stab:**
+- Dotted-8th note at cpm(20) (3 s/bar) = 0.375 s × 8 = 1.125 s, but delaytime(0.375) = absolute 0.375 s delay = sub-beat at this tempo. The delay echoes ring back at ~0.375 s intervals = the characteristic "Fender Rhodes with tape delay" sound that defines space-jazz from Pat Metheny's "Bright Size Life" through Polar Bear and modern Tom Misch / Jonah Yano cuts.
+
+**Outcome:** awaiting playback feedback. If approved, candidate to extract the JAZZ STAB layer into `patterns/components/synths/` as a reusable "quartal Rhodes" piece for future ambient tracks.
