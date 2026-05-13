@@ -60,9 +60,13 @@ Every track in the repo is a single expression like this — composable, no buil
 |-------|-------|-----|-------------|
 | `jaakko-kulta-future-bass.js` | Trance × future bass | 132 | Finnish children's canon reimagined — [▶ MP3](renders/Jaakkokulta.mp3) |
 | `spacepotatis-galaxy-overworld.js` | Ambient space chillout | ~60 | Main menu / galaxy view of [Spacepotatis](https://github.com/MikkoNumminen/Spacepotatis) — Stellaris-paced pad + Tyrian-era synths — [▶ MP3](renders/SpacepotatisMainMenu.mp3) |
+| `spacepotatis-galaxy-overworld2.js` | Ambient sci-fi tech | ~60 | Tubernovae Cluster overworld for [Spacepotatis](https://github.com/MikkoNumminen/Spacepotatis) — sister piece to galaxy 1 recolored for an advanced-tech civilization (E dorian + Cmaj7#11 lydian sparkle, square-wave tracker arp, sonar swell, encrypted data burst) |
 | `spacepotatis-mission1.js` | Combat synthwave | 132 | Mission 1 theme of [Spacepotatis](https://github.com/MikkoNumminen/Spacepotatis) — Tyrian-style buildup → drop → loop, cyberpunk palette — [▶ MP3](renders/SpacepotatisMission1.mp3) |
-| `spacepotatis-mission2.js` | Aggressive major synthpop | 144 | Mission 2 theme of [Spacepotatis](https://github.com/MikkoNumminen/Spacepotatis) — E major anthem with intro/main/break/variation arc, octave-up climax |
-| `spacepotatis-storymusic1.js` | Ambient sci-fi storyteller | ~60 | "The Great Potato Awakening" intro narration underscore for [Spacepotatis](https://github.com/MikkoNumminen/Spacepotatis) — 32s VO bed |
+| `spacepotatis-mission2.js` | 90s tracker space combat | 144 | Mission 2 theme of [Spacepotatis](https://github.com/MikkoNumminen/Spacepotatis) — E phrygian Tyrian "Mars" / Wipeout XL / Descent palette with Phrygian b2 dread tone, distorted saw lead, 5th-up power-chord climax |
+| `spacepotatis-storymusic1.js` | Ambient sci-fi storyteller | ~60 | "The Great Potato Awakening" intro narration underscore for [Spacepotatis](https://github.com/MikkoNumminen/Spacepotatis) — 32 s VO bed |
+| `spacepotatis-storymusic2.js` | Ambient sci-fi storyteller | ~60 | Tubernovae Cluster warp-transition narration underscore for [Spacepotatis](https://github.com/MikkoNumminen/Spacepotatis) — 80 s C-major journey arc with warp swell + "Punch it!" stinger climax |
+| `spacepotatis-shop.js` | Sci-fi ambient + space jazz | 80 | Shop / market music for [Spacepotatis](https://github.com/MikkoNumminen/Spacepotatis) — D dorian modal jazz on a self-repeating bass ostinato, sus/9/#11 voicings, alien-station ambient texture |
+| `mikkonumminen-dev-lander.js` | Progressive deep-space ambient | ~80 | Landing-page bed for [mikkonumminen-dev.vercel.app](https://mikkonumminen-dev.vercel.app) — F lydian drone with structural masks, "So What" quartal Rhodes stabs, no beat |
 
 Rendered MP3s of selected tracks live in [`renders/`](renders/) (WAV sources are git-ignored to keep the repo lean).
 
